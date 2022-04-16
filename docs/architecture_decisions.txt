@@ -1,0 +1,35 @@
+As the number of users grow, the number of locations to log will
+increase rapidly. Currently, everytime a new location needs to be
+registered, a synchronous request is made which could create
+slowdowns. Also, the request for saving a location needs to perform
+a database query which can even further slow the response time in case
+of important activity. Of course, it is possible to scale the api
+horizontally to handle that, but it would be very inefficient to scale
+the whole monolith for only one route. Plus, there is no real value in
+handling the addition of the locations in real time /
+synchronously.
+
+For these reasons we decided to move the location
+service to its own microservice. Kafka will be used to store new
+location events using a producer exposed as a gRPC service.
+Indeed, new locations are expected to come in continuously with an
+increasing volumetry. Since our service revolves around this data, it
+is particualry important to use reliable tools here. Kafka is very
+useful for our configuration since contrary to the current monolithic
+POC, if the api server crashed due to load, the location messages will
+still be backlogged and processed. 
+
+
+The choice for a gRPC interface over REST is motivated by the fact
+that we do not need the flexibility that REST provides since the
+location schema is unlikely to change a lot over time; we sacrifice
+this flexibility with the greater security and performace that gRPC
+provides. As the location service will probably be consume by mobile
+devices, it is worth to mention that mobile devices can integrate well
+with gRPC without an intermediary proxy oe backend service which
+simplify the development and reduce the maintenance of code required
+compared with a REST interface.
+
+Finally, a Kafka consumer will persist backlogged location to our
+PostgreSQL database to make them available for the connection service.
+
