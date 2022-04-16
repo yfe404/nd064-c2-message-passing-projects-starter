@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, make_response, jsonify
 from flask_cors import CORS
 from flask_restx import Api
 from flask_sqlalchemy import SQLAlchemy
@@ -21,6 +21,17 @@ def create_app(env=None):
 
     @app.route("/health")
     def health():
+
+         try:
+             db.engine.execute('SELECT 1')
+         except Exception as e:
+             response = make_response(
+                 jsonify("Service unavailable"),
+                503,
+            )
+            response.headers["Content-Type"] = "application/json"
+            return response
+
         return jsonify("healthy")
 
     return app
