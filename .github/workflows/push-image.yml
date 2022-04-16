@@ -27,9 +27,7 @@ jobs:
           
       - name: Build, tag, and push the image to Docker Registry
         uses: docker/build-push-action@v2
-        id: build-image
-        run: |
-          cd modules/frontend
-          docker build -t yfe/nd064-udaconnect-app:latest .
-          echo "Pushing image to docker registry..."
-          docker push yfe/nd064-udaconnect-app:latest
+        with:
+          context: "{{defaultContext}}:modules/frontend"
+          push: true
+          tags: yfe/nd064-udaconnect-app:latest
