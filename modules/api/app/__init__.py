@@ -29,8 +29,8 @@ def create_app(env=None):
                  jsonify("Service unavailable"),
                 503,
             )
-            response.headers["Content-Type"] = "application/json"
-            return response
+             response.headers["Content-Type"] = "application/json"
+             return response
 
         return jsonify("healthy")
 
