@@ -1,0 +1,101 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgis/postgis:12-2.5-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5432:5432'
+    volumes: 
+      - db:/var/lib/postgresql/data
+      - ./api/init.sql:/docker-entrypoint-initdb.d/create_tables.sql
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@local.host
+      - PGADMIN_DEFAULT_PASSWORD=password
+    ports:
+      - '8180:80'
+    depends_on:
+      - postgres
+
+  zookeeper:
+    image: 'bitnami/zookeeper:latest'
+    ports:
+      - '2181:2181'
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+
+  kafka:
+    image: 'bitnami/kafka:2.8.1'
+    ports:
+      - '9092:9092'
+    expose:
+      - '9092'
+    environment:
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_CFG_LISTENERS=INSIDE://0.0.0.0:9092
+      - KAFKA_CFG_ADVERTISED_LISTENERS=INSIDE://kafka:9092
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=INSIDE
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=INSIDE:PLAINTEXT
+      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
+    depends_on:
+      - zookeeper
+
+  producer:
+    build:
+      context: ./locations/
+      dockerfile: ../locations/producer/Dockerfile
+    ports:
+      - '50051:50051'
+    environment:
+      - KAFKA_HOST=kafka
+      - KAFKA_PORT=9092
+      - TOPIC_NAME=locations
+    depends_on:
+      - kafka
+      - consumer
+
+  consumer:
+    build:
+      context: ./locations/
+      dockerfile: ../locations/consumer/Dockerfile
+    environment:
+      - KAFKA_HOST=kafka
+      - KAFKA_PORT=9092
+      - TOPIC_NAME=locations
+      - DB_USERNAME=postgres
+      - DB_NAME=postgres
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_PASSWORD=postgres
+    depends_on:
+      - kafka
+      - postgres
+      
+  api:
+    container_name: api
+    build:
+      context: ./api
+    depends_on:
+      - postgres
+    ports:
+      - 30005:5000
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: postgres
+#    links:
+#      - db
+#    volumes:
+#      - './:/src'
+volumes:
+  db:
+    driver: local
