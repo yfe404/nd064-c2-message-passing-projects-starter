@@ -21,17 +21,17 @@ def create_app(env=None):
 
     @app.route("/health")
     def health():
-
-         try:
-             db.engine.execute('SELECT 1')
-         except Exception as e:
-             response = make_response(
-                 jsonify("Service unavailable"),
+        from app import db
+        try:
+            db.engine.execute('SELECT 1')
+        except Exception as e:
+            response = make_response(
+                jsonify("Service unavailable"),
                 503,
             )
-             response.headers["Content-Type"] = "application/json"
-             return response
-
+            response.headers["Content-Type"] = "application/json"
+            return response
+        
         return jsonify("healthy")
-
+    
     return app
