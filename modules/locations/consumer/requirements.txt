@@ -1,0 +1,7 @@
+grpcio-tools==1.44.0
+kafka-python==2.0.2
+retry==0.9.2
+GeoAlchemy2==0.11.1
+sqlalchemy==1.4.35
+Shapely==1.8.1.post1
+psycopg2-binary==2.8.5
