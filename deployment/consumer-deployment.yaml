@@ -35,8 +35,9 @@ spec:
           value: "9092"
         - name: TOPIC_NAME
           value: locations
-        image: consumer
+      - image: yfe404/nd064-udaconnect-consumer:latest
         name: consumer
+        imagePullPolicy: Always
         resources: {}
       restartPolicy: Always
 status: {}
