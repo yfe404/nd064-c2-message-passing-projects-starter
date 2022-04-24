@@ -1,12 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert
-    kompose.version: 1.16.0 (0c01309)
-  creationTimestamp: null
   labels:
-    io.kompose.service: consumer
+    service: consumer
   name: consumer
 spec:
   replicas: 1
@@ -14,15 +10,19 @@ spec:
     matchLabels:
       service: consumer
 
-  strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        io.kompose.service: consumer
+        service: consumer
+      name: consumer
     spec:
       containers:
-      - env:
+      - image: yfe404/nd064-udaconnect-consumer:latest
+        name: consumer
+        imagePullPolicy: Always
+        restartPolicy: Always
+        env:
         - name: DB_HOST
           value: postgres
         - name: DB_NAME
@@ -39,9 +39,3 @@ spec:
           value: "9092"
         - name: TOPIC_NAME
           value: locations
-      - image: yfe404/nd064-udaconnect-consumer:latest
-        name: consumer
-        imagePullPolicy: Always
-        resources: {}
-      restartPolicy: Always
-status: {}
