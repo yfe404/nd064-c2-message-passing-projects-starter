@@ -1,0 +1,42 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: consumer
+  name: consumer
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: consumer
+    spec:
+      containers:
+      - env:
+        - name: DB_HOST
+          value: postgres
+        - name: DB_NAME
+          value: postgres
+        - name: DB_PASSWORD
+          value: postgres
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_USERNAME
+          value: postgres
+        - name: KAFKA_HOST
+          value: kafka
+        - name: KAFKA_PORT
+          value: "9092"
+        - name: TOPIC_NAME
+          value: locations
+        image: consumer
+        name: consumer
+        resources: {}
+      restartPolicy: Always
+status: {}
