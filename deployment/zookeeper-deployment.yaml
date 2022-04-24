@@ -10,6 +10,10 @@ metadata:
   name: zookeeper
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      service: zookeeper
+
   strategy: {}
   template:
     metadata:
