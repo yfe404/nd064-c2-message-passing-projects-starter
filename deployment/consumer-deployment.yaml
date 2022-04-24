@@ -21,7 +21,6 @@ spec:
       - image: yfe404/nd064-udaconnect-consumer:latest
         name: consumer
         imagePullPolicy: Always
-        restartPolicy: Always
         env:
         - name: DB_HOST
           value: postgres
@@ -39,3 +38,4 @@ spec:
           value: "9092"
         - name: TOPIC_NAME
           value: locations
+      restartPolicy: Always

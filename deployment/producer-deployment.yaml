@@ -21,7 +21,6 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 50051
-          restartPolicy: Always
           env:
             - name: KAFKA_HOST
               value: kafka
@@ -29,7 +28,4 @@ spec:
               value: "9092"
             - name: TOPIC_NAME
               value: locations
-
-
-
-
+      restartPolicy: Always

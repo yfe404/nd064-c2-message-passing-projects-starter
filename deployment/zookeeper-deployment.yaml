@@ -19,7 +19,7 @@ spec:
           name: zookeeper
           ports:
             - containerPort: 2181
-          restartPolicy: Always
           env:
           - name: ALLOW_ANONYMOUS_LOGIN
             value: "yes"
+      restartPolicy: Always

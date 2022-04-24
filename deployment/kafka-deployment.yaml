@@ -19,7 +19,6 @@ spec:
           name: kafka
           ports:
             - containerPort: 9092
-          restartPolicy: Always
           env:
           - name: ALLOW_PLAINTEXT_LISTENER
             value: "yes"
@@ -35,3 +34,4 @@ spec:
             value: INSIDE:PLAINTEXT
           - name: KAFKA_CFG_ZOOKEEPER_CONNECT
             value: zookeeper:2181
+      restartPolicy: Always
