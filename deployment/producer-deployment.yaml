@@ -22,10 +22,19 @@ spec:
           ports:
             - containerPort: 50051
           env:
-            - name: KAFKA_HOST
-              value: kafka
-            - name: KAFKA_PORT
-              value: "9092"
-            - name: TOPIC_NAME
-              value: locations
+          - name: KAFKA_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: kafka-env
+                key: KAFKA_HOST
+          - name: KAFKA_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: kafka-env
+                key: KAFKA_PORT
+          - name: TOPIC_NAME
+            valueFrom:
+              configMapKeyRef:
+                name: kafka-env
+                key: TOPIC_NAME
       restartPolicy: Always

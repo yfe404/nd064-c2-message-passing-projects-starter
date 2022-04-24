@@ -22,20 +22,44 @@ spec:
         name: consumer
         imagePullPolicy: Always
         env:
-        - name: DB_HOST
-          value: postgres
-        - name: DB_NAME
-          value: postgres
-        - name: DB_PASSWORD
-          value: postgres
-        - name: DB_PORT
-          value: "5432"
         - name: DB_USERNAME
-          value: postgres
+          valueFrom:
+            configMapKeyRef:
+              name: db-env
+              key: DB_USERNAME
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: DB_PASSWORD
+        - name: DB_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: db-env
+              key: DB_NAME
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: db-env
+              key: DB_HOST
+        - name: DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: db-env
+              key: DB_PORT
         - name: KAFKA_HOST
-          value: kafka
+          valueFrom:
+            configMapKeyRef:
+              name: kafka-env
+              key: KAFKA_HOST
         - name: KAFKA_PORT
-          value: "9092"
+          valueFrom:
+            configMapKeyRef:
+              name: kafka-env
+              key: KAFKA_PORT
         - name: TOPIC_NAME
-          value: locations
+          valueFrom:
+            configMapKeyRef:
+              name: kafka-env
+              key: TOPIC_NAME
       restartPolicy: Always
