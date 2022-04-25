@@ -12,8 +12,10 @@ spec:
   ports:
   - name: "50051"
     port: 50051
+    nodePort: 30002	
     targetPort: 50051
   selector:
     io.kompose.service: producer
+  type: NodePort
 status:
   loadBalancer: {}
