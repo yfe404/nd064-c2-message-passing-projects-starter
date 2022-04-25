@@ -1,0 +1,20 @@
+Here is an example of how to use our gRPC endpoint using Python:
+----------------------------------------------------------------
+
+
+import grpc
+import location_pb2
+import location_pb2_grpc
+
+channel = grpc.insecure_channel("localhost:30002")
+client = location_pb2_grpc.LocationStub(channel)
+
+req_data = {
+    "id": 42,
+    "person_id": 1,
+    "longitude": "3.067",
+    "latitude": "45.832"
+}
+
+request = location_pb2.LocationRequest(**req_data)
+route = client.AddLocation(request)
