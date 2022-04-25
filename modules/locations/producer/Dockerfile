@@ -6,7 +6,7 @@ RUN apk add --no-cache gcc g++ musl-dev linux-headers libc-dev
 COPY producer/requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
-EXPOSE 50001
+EXPOSE 50051
 
 COPY producer/ .
 COPY ./proto/ .
