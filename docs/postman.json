@@ -1,0 +1,181 @@
+{
+	"info": {
+		"_postman_id": "aa768886-1245-40fc-8235-af019c305c2a",
+		"name": "udacity-project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "healthcheck",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:30005/health",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "30005",
+					"path": [
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve all locations",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:30005/api/persons",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "30005",
+					"path": [
+						"api",
+						"persons"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve one location",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:30005/api/locations/29",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "30005",
+					"path": [
+						"api",
+						"locations",
+						"29"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve all persons",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:30005/api/persons",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "30005",
+					"path": [
+						"api",
+						"persons"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve one person",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:30005/api/persons/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "30005",
+					"path": [
+						"api",
+						"persons",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a person",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"first_name\": \"Anakin\",\n    \"last_name\": \"Skywalker\",\n    \"company_name\": \"Jedi Order\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:30005/api/persons",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "30005",
+					"path": [
+						"api",
+						"persons"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve connections",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:30005/api/persons/1/connection?distance=100&end_date=2023-01-01&start_date=2000-01-01",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "30005",
+					"path": [
+						"api",
+						"persons",
+						"1",
+						"connection"
+					],
+					"query": [
+						{
+							"key": "distance",
+							"value": "100"
+						},
+						{
+							"key": "end_date",
+							"value": "2023-01-01"
+						},
+						{
+							"key": "start_date",
+							"value": "2000-01-01"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
